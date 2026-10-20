@@ -55,8 +55,25 @@ jobs:
           gradle-version: "8.7"
 
       - name: Assemble
+        id: assemble
+        continue-on-error: true
         working-directory: android
-        run: gradle assembleDebug -PgeckoviewVersion=${{ steps.gecko.outputs.version }} --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          gradle assembleDebug -PgeckoviewVersion=${{ steps.gecko.outputs.version }} --no-daemon --stacktrace --console=plain 2>&1 | tee build.log
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: android/build.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Fail when assemble failed
+        if: steps.assemble.outcome != 'success'
+        run: exit 1
 
       - uses: actions/upload-artifact@v4
         with:
