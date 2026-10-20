@@ -1,13 +1,6 @@
+// Ghost Guard: fingerprint hygiene, diagnosis, session repair.
+
 'use strict';
-/**
- * Ghost Guard — NeverBrowser's anti-bot-hardening layer.
- *
- * It does NOT "bypass" CAPTCHAs. It removes the usual tells that make
- * Chromium shells look automated (Electron in the UA string, navigator.webdriver,
- * missing languages/plugins, throwaway cookie jars) and, when Google still
- * throws a challenge at us, offers a one-click route around it (same query on
- * DuckDuckGo, or a repaired session retry).
- */
 const { session, app } = require('electron');
 
 const UA = {
@@ -49,7 +42,6 @@ class GhostGuard {
     return preset !== 'auto' && UA[preset] ? UA[preset] : defaultUA();
   }
 
-  /** Called once per tab at creation time. */
   harden(wc) {
     if (!this.enabled()) return;
     try {
@@ -60,7 +52,6 @@ class GhostGuard {
     }
   }
 
-  /** Called on every did-finish-load. */
   onLoad(wc, url) {
     if (!this.enabled() || url.startsWith('never://')) return;
     const script = `
@@ -112,7 +103,7 @@ class GhostGuard {
         const prev = new URL(tab.wc.getURL());
         query = prev.searchParams.get('q') || '';
       }
-    } catch { /* noop */ }
+    } catch {  }
 
     this.statusInfo.challenges += 1;
     const rescueUrl = query
@@ -202,7 +193,6 @@ class GhostGuard {
   async repair() {
     const ses = session.fromPartition('persist:neverbrowser');
     try {
-      // Only clear known automation/challenge artifacts, never passwords or logins.
       const cookies = await ses.cookies.get({ domain: 'google.com' });
       for (const cookie of cookies) {
         if (/^(GOOGLE_ABUSE|_GRECAPTCHA|NID|1P_JAR)/.test(cookie.name)) {

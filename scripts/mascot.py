@@ -7,8 +7,6 @@ im = Image.open(SRC).convert('RGB')
 w, h = im.size
 px = im.load()
 
-# Flood-fill the near-white outer background from the borders only, so the
-# white fur / apron inside the black outline stays intact.
 seen = [[False] * w for _ in range(h)]
 q = deque()
 for x in range(w):
@@ -26,7 +24,6 @@ while q:
     r, g, b = px[x, y]
     if min(r, g, b) < 232:
         continue
-    # feathered alpha on the anti-aliased rim
     edge = min(r, g, b)
     alpha = 0 if edge >= 250 else max(0, min(255, int((250 - edge) * 8)))
     op[x, y] = (r, g, b, alpha)

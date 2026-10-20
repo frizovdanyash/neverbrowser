@@ -1,14 +1,6 @@
+// NeverBrowser plugin host: manifests, sandbox, API, panels, commands.
+
 'use strict';
-/**
- * NeverBrowser Plugin Host.
- *
- * A plugin is a folder with manifest.json + a JS entry file. It runs in a
- * locked-down `vm` context, gets a capability-scoped `api`, and can contribute
- * panels, commands, content scripts, navigation filters, theme overrides and
- * status items. Every capability is gated by manifest permissions.
- *
- * Read docs/PLUGIN-API.md — it is the contract for this file.
- */
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
@@ -71,11 +63,11 @@ class PluginHost {
     this.capsules = capsules;
     this.ghost = ghost;
     this.plugins = new Map();
-    this.panels = new Map();       // `${pluginId}::${panelId}` -> {html,...}
-    this.commands = new Map();     // `${pluginId}::${cmdId}`
-    this.contentScripts = [];      // {pluginId, id, regex, css, js}
-    this.navFilters = [];          // {pluginId, name, fn}
-    this.listeners = [];           // {pluginId, event, fn}
+    this.panels = new Map();
+    this.commands = new Map();
+    this.contentScripts = [];
+    this.navFilters = [];
+    this.listeners = [];
     this.panelHandlers = new Map();
     this.stateFile = path.join(userData, 'plugins-state.json');
     this.storageDir = path.join(userData, 'plugin-storage');
@@ -84,10 +76,6 @@ class PluginHost {
     if (!Array.isArray(this.state.disabled)) this.state.disabled = [];
     this.extensionDirs = dirs;
   }
-
-  /* ---------------------------------------------------------------- */
-  /* Loading                                                           */
-  /* ---------------------------------------------------------------- */
 
   findPlugins() {
     const found = [];
@@ -114,7 +102,7 @@ class PluginHost {
     this.plugins.clear();
     const seen = new Set();
     for (const { dir, manifest, root } of this.findPlugins()) {
-      if (seen.has(manifest.id)) continue; // bundled first, user dir can override via rename
+      if (seen.has(manifest.id)) continue;
       seen.add(manifest.id);
       const errors = checkManifest(manifest);
       const builtin = root === this.dirs[0];
@@ -201,7 +189,6 @@ class PluginHost {
       if (ret && typeof ret.then === 'function') await ret;
       const definition = module.exports && module.exports.activate ? module.exports : null;
       if (!definition) {
-        // also support the "call api directly" style
         if (typeof module.exports === 'function') await module.exports(api);
         else if (!record.commands.length && !record.panels.length) throw new Error('module.exports.activate(api) is required');
       } else {
@@ -280,10 +267,6 @@ class PluginHost {
     this.navFilters = this.navFilters.filter((f) => f.pluginId !== id);
     this.listeners = this.listeners.filter((l) => l.pluginId !== id);
   }
-
-  /* ---------------------------------------------------------------- */
-  /* Capability-scoped API                                             */
-  /* ---------------------------------------------------------------- */
 
   createApi(record, perms) {
     const host = this;
@@ -387,7 +370,6 @@ class PluginHost {
         },
         addStatusItem: ({ id: itemId, text, title, onClick }) => {
           require('ui');
-          // Status items are broadcast to the chrome; the chrome can render them.
           host.send('plugins:changed', host.list());
           return { id: itemId, text, title, onClick };
         },
@@ -539,10 +521,6 @@ class PluginHost {
     return api;
   }
 
-  /* ---------------------------------------------------------------- */
-  /* Runtime services                                                  */
-  /* ---------------------------------------------------------------- */
-
   emit(event, payload) {
     for (const listener of [...this.listeners]) {
       if (listener.event !== event) continue;
@@ -552,10 +530,9 @@ class PluginHost {
         console.error(`[plugins] ${listener.pluginId} handler for ${event} threw:`, err.message);
       }
     }
-    // plugins can also subscribe to namespaced events via events.emit
     for (const listener of [...this.listeners]) {
       if (listener.event !== `plugin:*`) continue;
-      try { listener.fn({ event, payload }); } catch { /* noop */ }
+      try { listener.fn({ event, payload }); } catch {  }
     }
   }
 

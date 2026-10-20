@@ -1,9 +1,5 @@
-/* eslint-disable */
-/**
- * Browser preview shim for NeverBrowser's chrome (scripts/preview-server.js).
- * It fakes window.nb so the real renderer (index.html + app.js) runs in a tab.
- * Nothing here ships inside the Electron app.
- */
+// Preview-only stand-in for window.nb.
+
 (() => {
   const listeners = new Map();
   const emit = (channel, payload) => (listeners.get(channel) || []).forEach((fn) => fn(payload));

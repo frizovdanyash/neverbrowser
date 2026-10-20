@@ -1,7 +1,4 @@
-/**
- * Cookie Cleaner — content script that hides consent banners.
- * Demonstrates: contentScripts.register (css + js), match patterns.
- */
+// Cookie Cleaner — hides consent banners.
 module.exports = {
   activate(api) {
     api.contentScripts.register({

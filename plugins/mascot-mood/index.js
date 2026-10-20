@@ -1,7 +1,4 @@
-/**
- * BoyKisser Moods — reactive mascot dialogue.
- * Demonstrates: events, mascot API, storage, random selection.
- */
+// BoyKisser Moods — reactive mascot dialogue.
 const LINES = [
   'Никогда не забывай: я уже запомнил эту страницу.',
   'Снова работаешь? Уважаю.',

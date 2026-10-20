@@ -1,4 +1,6 @@
 <!doctype html>
+<!-- NeverBrowser browser chrome. -->
+
 <html lang="ru">
 <head>
   <meta charset="utf-8">
@@ -8,7 +10,7 @@
 </head>
 <body>
   <div id="frame">
-    <!-- title bar -->
+
     <header id="titlebar">
       <div id="brand" title="NeverBrowser">
         <img src="../../assets/mascot.png" alt="BoyKisser" id="brand-mascot">
@@ -33,7 +35,6 @@
       </div>
     </header>
 
-    <!-- toolbar -->
     <div id="toolbar">
       <div class="nav-buttons">
         <button id="back" class="icon-btn" title="Назад">‹</button>
@@ -62,7 +63,6 @@
       </div>
     </div>
 
-    <!-- sidebar -->
     <aside id="sidebar">
       <nav class="side-nav" id="side-nav">
         <button class="side-item active" data-view="home">🏠 <b>Старт</b> <kbd>Ctrl+1</kbd></button>
@@ -97,7 +97,6 @@
     <main id="stage" aria-hidden="true"></main>
   </div>
 
-  <!-- side panel -->
   <div id="panel" class="panel hidden" role="dialog">
     <div class="panel-head">
       <span id="panel-title">Панель</span>
@@ -106,7 +105,6 @@
     <div id="panel-body" class="panel-body"></div>
   </div>
 
-  <!-- command palette -->
   <div id="palette" class="palette hidden">
     <div class="palette-box">
       <input id="palette-input" placeholder="Команда, плагин или название капсулы…" />

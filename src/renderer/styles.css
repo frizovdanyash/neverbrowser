@@ -1,4 +1,5 @@
-/* NeverBrowser — chrome styles. Theme is driven by CSS variables set by app.js */
+/* NeverBrowser chrome styles. */
+
 :root {
   --bg: #101018;
   --panel: #17171f;
@@ -49,8 +50,6 @@ button { cursor: pointer; }
 }
 
 #frame.sidebar-collapsed { --sidebar: 0px; }
-
-/* ---------------- titlebar ---------------- */
 
 #titlebar {
   grid-area: title;
@@ -150,8 +149,6 @@ button { cursor: pointer; }
 #win-controls button:hover { background: rgba(255, 255, 255, .1); color: var(--text); }
 #win-close:hover { background: #e0355a; color: #fff; }
 
-/* ---------------- toolbar ---------------- */
-
 #toolbar {
   grid-area: toolbar;
   display: flex;
@@ -198,8 +195,6 @@ button { cursor: pointer; }
 }
 .mini-badge.warn { background: rgba(255, 196, 0, .18); color: #ffd25e; }
 .hint { font-size: 11px; color: var(--muted); white-space: nowrap; }
-
-/* ---------------- sidebar ---------------- */
 
 #sidebar {
   grid-area: sidebar;
@@ -257,8 +252,6 @@ button { cursor: pointer; }
 .small { font-size: 11px; }
 .muted { color: var(--muted); }
 
-/* ---------------- stage ---------------- */
-
 #stage { grid-area: stage; background: var(--bg); }
 #focus-pill {
   display: flex; align-items: center; gap: 7px;
@@ -271,8 +264,6 @@ button { cursor: pointer; }
   border: 0; border-radius: 999px; width: 18px; height: 18px; padding: 0;
   background: var(--accent); color: #1a1020; font-weight: 700; line-height: 1;
 }
-
-/* ---------------- side panel ---------------- */
 
 .panel {
   position: fixed;
@@ -365,7 +356,6 @@ button { cursor: pointer; }
 .theme-swatch { display: flex; gap: 5px; margin-bottom: 7px; }
 .theme-swatch i { width: 16px; height: 16px; border-radius: 5px; display: block; }
 
-/* ---------------- mascot dock ---------------- */
 .side-label {
   padding: 6px 16px 4px; font-size: 9.5px; letter-spacing: .09em;
   text-transform: uppercase; color: var(--muted);
@@ -400,14 +390,10 @@ button { cursor: pointer; }
   user-select: text;
 }
 
-/* ---------------- plugin iframe ---------------- */
-
 iframe.plugin-frame {
   width: 100%; border: 0; border-radius: 10px; background: #0e0e15;
   min-height: 240px;
 }
-
-/* ---------------- palette ---------------- */
 
 .palette {
   position: fixed; inset: 0; z-index: 50;
@@ -440,8 +426,6 @@ iframe.plugin-frame {
 .palette-item.sel, .palette-item:hover { background: rgba(255, 255, 255, .07); }
 .palette-item .icon { color: var(--accent); width: 18px; text-align: center; }
 
-/* ---------------- toasts ---------------- */
-
 #toasts {
   display: flex; flex-direction: column; gap: 6px; padding: 0 12px 6px;
 }
@@ -468,6 +452,5 @@ kbd {
   font-family: ui-monospace, monospace;
 }
 
-/* light-ish themes get softer chrome */
 body.theme-latte { --shadow: 0 18px 44px rgba(90, 70, 40, .18); }
 body.theme-latte .brand-name span { color: #b5551f; }

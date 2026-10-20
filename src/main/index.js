@@ -1,8 +1,6 @@
+// NeverBrowser — main process: window, tabs, IPC, layout.
+
 'use strict';
-/**
- * NeverBrowser — main process.
- * Custom window chrome + WebContentsView tabs + plugin host + mascot brain.
- */
 const { app, BrowserWindow, WebContentsView, ipcMain, shell, session, Menu, nativeTheme, clipboard } = require('electron');
 const path = require('node:path');
 const fs = require('node:fs');
@@ -32,10 +30,6 @@ const state = {
   modal: false,
   focusUntil: 0
 };
-
-/* ------------------------------------------------------------------ */
-/* Tabs                                                                */
-/* ------------------------------------------------------------------ */
 
 class TabManager {
   constructor() {
@@ -176,7 +170,7 @@ class TabManager {
     try {
       tab.canGoBack = tab.wc.navigationHistory ? tab.wc.navigationHistory.canGoBack() : tab.wc.canGoBack();
       tab.canGoForward = tab.wc.navigationHistory ? tab.wc.navigationHistory.canGoForward() : tab.wc.canGoForward();
-    } catch { /* noop */ }
+    } catch {  }
     tab.url = tab.wc.getURL() || tab.url;
   }
 
@@ -266,10 +260,6 @@ class TabManager {
   }
 }
 
-/* ------------------------------------------------------------------ */
-/* Window                                                                */
-/* ------------------------------------------------------------------ */
-
 function createWindow() {
   win = new BrowserWindow({
     width: 1360,
@@ -310,10 +300,6 @@ function createWindow() {
   tabs.create({ url: store.get('startup') === 'start' ? 'never://start' : 'never://start' });
 }
 
-/* ------------------------------------------------------------------ */
-/* URL helpers                                                          */
-/* ------------------------------------------------------------------ */
-
 const ENGINES = {
   google: 'https://www.google.com/search?q=',
   duckduckgo: 'https://duckduckgo.com/?q=',
@@ -331,10 +317,6 @@ function normalizeUrl(input, engine = 'duckduckgo') {
   if (looksLikeHost) return `https://${raw}`;
   return `${ENGINES[engine] || ENGINES.duckduckgo}${encodeURIComponent(raw)}`;
 }
-
-/* ------------------------------------------------------------------ */
-/* IPC                                                                   */
-/* ------------------------------------------------------------------ */
 
 let tabs = null;
 
@@ -436,10 +418,6 @@ function wireIpc() {
   });
 }
 
-/* ------------------------------------------------------------------ */
-/* Settings application                                                 */
-/* ------------------------------------------------------------------ */
-
 let lastTheme = null;
 
 function applySettings(settings) {
@@ -449,10 +427,6 @@ function applySettings(settings) {
   lastTheme = settings.theme;
   tabs?.applyLayout();
 }
-
-/* ------------------------------------------------------------------ */
-/* Boot                                                                 */
-/* ------------------------------------------------------------------ */
 
 const gotLock = app.requestSingleInstanceLock();
 if (!gotLock) {
@@ -474,7 +448,6 @@ if (!gotLock) {
     store = new Store(app.getPath('userData'));
     lastTheme = store.get('theme');
 
-    // Session-level anti-bot hardening for the persistent profile.
     const ses = session.fromPartition('persist:neverbrowser');
     ses.setPermissionRequestHandler((_wc, permission, callback) => {
       callback(['fullscreen', 'clipboard-sanitized-write', 'notifications'].includes(permission));
@@ -522,5 +495,5 @@ if (!gotLock) {
   });
 
   app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
-  app.on('before-quit', () => { try { plugins?.dispose(); } catch { /* noop */ } });
+  app.on('before-quit', () => { try { plugins?.dispose(); } catch {  } });
 }

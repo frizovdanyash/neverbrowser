@@ -1,13 +1,6 @@
+// Static chrome preview for a regular browser.
+
 'use strict';
-/**
- * Browser preview for the NeverBrowser chrome.
- *
- *   npm run web   → http://0.0.0.0:4173
- *
- * Serves the real renderer with a fake window.nb (scripts/preview/mock-nb.js),
- * so the UI can be reviewed without Electron. The Electron app itself is
- * `npm start`.
- */
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -43,7 +36,6 @@ function renderChrome() {
   html = html.replace(/(src|href)="\.\.\/\.\.\/([^"]+)"/g, (_m, attr, file) => `${attr}="/${file}"`);
   html = html.replace('href="styles.css"', 'href="/src/renderer/styles.css"');
   const previewStyle = `<style>
-    /* preview-only: there is no native WebContentsView in a browser tab */
     #stage { display:flex; align-items:center; justify-content:center;
       background:
         radial-gradient(700px 520px at 24% 6%, rgba(255,122,184,.16), transparent 62%),

@@ -1,7 +1,4 @@
-/**
- * Scratchpad — notes with autosave.
- * Demonstrates: panel <-> plugin messaging, storage, clipboard, tabs API.
- */
+// Scratchpad — persistent notes.
 module.exports = {
   activate(api) {
     const save = (text) => api.storage.set('text', text);
@@ -77,7 +74,6 @@ module.exports = {
 
     api.events.on('tab:navigated', ({ title, url }) => {
       if (!url || url.startsWith('never://')) return;
-      // Optional "jot this tab" hook: plugins may append to the pad automatically.
       api.storage.set('lastSeen', { title, url, at: Date.now() });
     });
   }

@@ -1,9 +1,6 @@
+// Time Capsule: page snapshots, index, playback.
+
 'use strict';
-/**
- * Time Capsule — every page NeverBrowser visits can be frozen to disk:
- * full DOM, metadata, optional screenshot. Capsules survive site changes,
- * takedowns and "this page has been removed".
- */
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
@@ -38,7 +35,6 @@ class CapsuleVault {
   }
 
   noteVisit() {
-    /* hook for future visit journal */
   }
 
   async capture(tab, manual = false) {
@@ -92,7 +88,7 @@ class CapsuleVault {
           fs.writeFileSync(shotFile, image.toPNG());
           screenshot = `${id}.png`;
         }
-      } catch { /* screenshots are best-effort */ }
+      } catch {  }
     }
 
     const item = {
@@ -115,7 +111,7 @@ class CapsuleVault {
 
   removeFiles(id) {
     for (const ext of ['html', 'png']) {
-      try { fs.unlinkSync(path.join(this.dir, `${id}.${ext}`)); } catch { /* noop */ }
+      try { fs.unlinkSync(path.join(this.dir, `${id}.${ext}`)); } catch {  }
     }
   }
 

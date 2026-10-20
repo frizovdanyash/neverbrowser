@@ -1,7 +1,4 @@
-/**
- * Quick Search — multi-engine search from a panel.
- * Demonstrates: tabs.create, capsules.list, panel messaging.
- */
+// Quick Search — multi-engine search panel.
 module.exports = {
   activate(api) {
     const ENGINES = {

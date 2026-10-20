@@ -1,13 +1,11 @@
+// JSON settings store with defaults and listeners.
+
 'use strict';
-/**
- * Tiny JSON settings store (userData/settings.json) with deep defaults,
- * change listeners and debounced writes.
- */
 const fs = require('node:fs');
 const path = require('node:path');
 
 const DEFAULT_SETTINGS = {
-  theme: 'midnight',            // midnight | latte | forest | sunburst | custom
+  theme: 'midnight',
   accent: '#ff7ab8',
   custom: {
     bg: '#101018',
@@ -15,7 +13,7 @@ const DEFAULT_SETTINGS = {
     text: '#f5f2ff',
     accent: '#ff7ab8'
   },
-  searchEngine: 'duckduckgo',   // duckduckgo | google | bing | startpage
+  searchEngine: 'duckduckgo',
   ghostGuard: {
     enabled: true,
     humanizeTyping: true,
@@ -37,7 +35,7 @@ const DEFAULT_SETTINGS = {
   mascot: { enabled: true, reactions: true, name: 'BoyKisser' },
   splitRatio: 0.5,
   startup: 'start',
-  userAgentPreset: 'auto'       // auto | chrome-linux | chrome-win | safari-mac
+  userAgentPreset: 'auto'
 };
 
 function deepMerge(base, patch) {
@@ -60,7 +58,6 @@ class Store {
       const raw = fs.readFileSync(this.file, 'utf8');
       this.data = deepMerge(DEFAULT_SETTINGS, JSON.parse(raw));
     } catch {
-      /* first run */
     }
     this.timer = null;
   }
