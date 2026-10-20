@@ -1,7 +1,4 @@
-/**
- * Hello Plugin — шаблон для NeverBrowser.
- * Скопируй папку в <userData>/plugins/ и нажми «Перезагрузить все».
- */
+// Hello Plugin — minimal NeverBrowser plugin.
 module.exports = {
   activate(api) {
     let clicks = 0;

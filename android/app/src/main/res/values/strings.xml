@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NeverBrowser</string>
+    <string name="url_hint">Поиск или адрес</string>
+    <string name="back">Назад</string>
+    <string name="forward">Вперёд</string>
+    <string name="reload">Обновить</string>
+    <string name="menu">Меню</string>
+    <string name="capsule">Снять капсулу</string>
+</resources>

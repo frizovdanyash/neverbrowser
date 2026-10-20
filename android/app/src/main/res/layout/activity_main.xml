@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <HorizontalScrollView
+        android:id="@+id/tabScroll"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/panel"
+        android:fillViewport="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/tabStrip"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/panel"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="@string/back"
+            android:gravity="center"
+            android:text="‹"
+            android:textColor="@color/text"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/btnForward"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="@string/forward"
+            android:gravity="center"
+            android:text="›"
+            android:textColor="@color/text"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/btnReload"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="@string/reload"
+            android:gravity="center"
+            android:text="⟳"
+            android:textColor="@color/text"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/urlBar"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:background="@color/panel2"
+            android:hint="@string/url_hint"
+            android:imeOptions="actionGo"
+            android:inputType="textUri"
+            android:maxLines="1"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/text"
+            android:textColorHint="@color/muted"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/btnCapsule"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="@string/capsule"
+            android:gravity="center"
+            android:text="◷"
+            android:textColor="@color/accent"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/btnMenu"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="@string/menu"
+            android:gravity="center"
+            android:text="⋮"
+            android:textColor="@color/text"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/viewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

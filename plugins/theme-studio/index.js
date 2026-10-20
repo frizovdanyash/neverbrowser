@@ -1,7 +1,4 @@
-/**
- * Theme Studio — runtime CSS variable presets.
- * Demonstrates: api.ui.setTheme / clearTheme, panel buttons, storage.
- */
+// Theme Studio — runtime theme presets.
 const PRESETS = {
   'Bubblegum': { '--accent': '#ff7ab8', '--accent-2': '#c084fc', '--bg': '#140f18', '--panel': '#1c1422', '--panel-2': '#241a2c' },
   'Mint': { '--accent': '#5fe3b5', '--accent-2': '#4cc9f0', '--bg': '#0a1512', '--panel': '#10201b', '--panel-2': '#152a23' },

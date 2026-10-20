@@ -1,8 +1,6 @@
+// Preload bridge: whitelisted IPC surface for the chrome.
+
 'use strict';
-/**
- * NeverBrowser — preload bridge for the browser chrome.
- * Only a strict, whitelisted IPC surface is exposed to the renderer.
- */
 const { contextBridge, ipcRenderer } = require('electron');
 
 const SEND_CHANNELS = new Set([

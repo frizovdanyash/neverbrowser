@@ -1,7 +1,4 @@
-/**
- * Focus Room — bundled NeverBrowser plugin.
- * Demonstrates: navigation filters, commands, panels, storage, events, mascot.
- */
+// Focus Room — deep work sessions with navigation blocking.
 module.exports = {
   activate(api) {
     const DISTRACTIONS = ['youtube.com', 'youtu.be', 'tiktok.com', 'x.com', 'twitter.com', 'reddit.com', 'instagram.com', 'twitch.tv', 'vk.com/clips'];
@@ -104,7 +101,7 @@ module.exports = {
           api.mascot.setMood('shield', 'Не сейчас. Таймер ещё идёт!');
           return 'включён Focus Room';
         }
-      } catch { /* ignore malformed URLs */ }
+      } catch {  }
       return null;
     });
 
@@ -119,7 +116,6 @@ module.exports = {
     });
     api.events.on('tab:navigated', () => push());
 
-    // keep the sidebar panel in sync with the countdown
     const timer = setInterval(() => {
       if (until && until <= Date.now()) {
         until = 0;

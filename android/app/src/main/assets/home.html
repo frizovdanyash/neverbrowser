@@ -1,0 +1,127 @@
+<!doctype html>
+<!-- NeverBrowser Android start page. -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NeverBrowser</title>
+<style>
+  :root {
+    --bg: #101018;
+    --panel: #17171f;
+    --panel2: #1d1d28;
+    --text: #f5f2ff;
+    --muted: #9a94b3;
+    --accent: #ff7ab8;
+    --accent2: #9d7bff;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background:
+      radial-gradient(700px 420px at 18% -10%, rgba(255,122,184,.18), transparent 60%),
+      radial-gradient(640px 420px at 92% 8%, rgba(157,123,255,.14), transparent 62%),
+      var(--bg);
+    color: var(--text);
+    font: 15px/1.5 Inter, "Roboto", system-ui, -apple-system, sans-serif;
+    padding: 22px 18px 40px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  .hero { text-align: center; }
+  .mascot { width: 118px; height: auto; filter: drop-shadow(0 16px 26px rgba(0,0,0,.5)); }
+  h1 { margin: 6px 0 2px; font-size: 27px; letter-spacing: -.02em; }
+  h1 span { color: var(--accent); }
+  .tagline { margin: 0 0 20px; color: var(--muted); font-size: 13px; }
+  form { display: flex; gap: 8px; margin-bottom: 12px; }
+  input[type="search"] {
+    flex: 1; min-width: 0; height: 48px; padding: 0 16px;
+    border-radius: 14px; border: 1px solid rgba(255,255,255,.1);
+    background: var(--panel2); color: var(--text); font-size: 15px; outline: none;
+  }
+  input[type="search"]:focus { border-color: var(--accent); }
+  button.go {
+    height: 48px; padding: 0 20px; border: 0; border-radius: 14px;
+    background: var(--accent); color: #1a1020; font-weight: 700; font-size: 15px;
+  }
+  .engine { text-align: center; color: var(--muted); font-size: 11px; margin-bottom: 24px; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
+  .tile {
+    display: block; padding: 14px 10px; border-radius: 14px; text-decoration: none;
+    color: var(--text); background: var(--panel); border: 1px solid rgba(255,255,255,.07);
+    text-align: center; font-size: 12px;
+  }
+  .tile .ico { display: block; font-size: 22px; margin-bottom: 6px; }
+  .card {
+    background: var(--panel); border: 1px solid rgba(255,255,255,.07);
+    border-radius: 16px; padding: 14px 16px; margin-bottom: 10px;
+  }
+  .card h3 { margin: 0 0 5px; font-size: 13px; color: var(--accent); }
+  .card p { margin: 0; color: var(--muted); font-size: 12.5px; }
+  footer { margin-top: 26px; text-align: center; color: var(--muted); font-size: 11px; }
+  footer b { color: var(--text); font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <img class="mascot" src="mascot.png" alt="BoyKisser">
+    <h1>Never<span>Browser</span></h1>
+    <p class="tagline">никогда не забывает · никогда не скучает</p>
+  </div>
+
+  <form id="search">
+    <input id="q" type="search" placeholder="Поиск или адрес" autocomplete="off" enterkeyhint="go">
+    <button class="go" type="submit">→</button>
+  </form>
+  <div class="engine" id="engine">DuckDuckGo</div>
+
+  <div class="tiles">
+    <a class="tile" href="https://github.com/frizovdanya"><span class="ico">🐾</span>GitHub</a>
+    <a class="tile" href="https://duckduckgo.com"><span class="ico">🦆</span>DuckDuckGo</a>
+    <a class="tile" href="https://developer.mozilla.org"><span class="ico">📚</span>MDN</a>
+    <a class="tile" href="https://news.ycombinator.com"><span class="ico">🧠</span>Hacker News</a>
+    <a class="tile" href="https://www.youtube.com"><span class="ico">🎧</span>YouTube</a>
+    <a class="tile" href="https://www.electronjs.org"><span class="ico">⚡</span>Electron</a>
+  </div>
+
+  <div class="card">
+    <h3>◷ Time Capsule</h3>
+    <p>Кнопка ◷ в тулбаре сохраняет снимок страницы. Сайт удалит статью — снимок останется.</p>
+  </div>
+  <div class="card">
+    <h3>◉ Ghost Guard</h3>
+    <p>Подменяет User-Agent, включает защиту от трекеров и приватные сессии. Капчу не решает — её решает человек.</p>
+  </div>
+  <div class="card">
+    <h3>🎨 Темы</h3>
+    <p>Midnight, Latte, Forest, Sunburst и Berry. Меняются в меню ⋮ → Тема.</p>
+  </div>
+
+  <footer>
+    NeverBrowser 1.0 · движок <b>GeckoView</b><br>
+    автор <b>@frizovdanya</b> · маскот <b>BoyKisser</b>
+  </footer>
+</div>
+
+<script>
+  var ENGINES = {
+    DuckDuckGo: 'https://duckduckgo.com/?q=',
+    Google: 'https://www.google.com/search?q=',
+    Bing: 'https://www.bing.com/search?q=',
+    Startpage: 'https://www.startpage.com/sp/search?query='
+  };
+
+  var engineName = decodeURIComponent((location.hash || '').replace('#', '')) || 'DuckDuckGo';
+  if (!ENGINES[engineName]) engineName = 'DuckDuckGo';
+  document.getElementById('engine').textContent = 'поиск: ' + engineName;
+
+  document.getElementById('search').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var value = document.getElementById('q').value.trim();
+    if (!value) return;
+    var looksLikeUrl = /^[\w-]+(\.[\w-]+)+(\/.*)?$/.test(value) && value.indexOf(' ') === -1;
+    location.href = looksLikeUrl ? 'https://' + value : ENGINES[engineName] + encodeURIComponent(value);
+  });
+</script>
+</body>
+</html>

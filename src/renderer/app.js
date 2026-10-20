@@ -1,5 +1,6 @@
+// Browser chrome renderer.
+
 'use strict';
-/* NeverBrowser — browser chrome renderer. Talks to the main process through window.nb. */
 
 const nb = window.nb;
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -26,10 +27,6 @@ const THEMES = {
   sunburst: { label: 'Sunburst', accent: '#ffb23e', vars: { '--bg': '#171208', '--panel': '#211a0d', '--panel-2': '#2a2111', '--panel-3': '#3a2d16', '--text': '#fff6e6', '--muted': '#c2a97e', '--accent': '#ffb23e', '--accent-2': '#ff6f91' } }
 };
 
-/* ------------------------------------------------------------------ */
-/* Theme                                                               */
-/* ------------------------------------------------------------------ */
-
 function applyTheme() {
   const s = state.settings;
   if (!s) return;
@@ -43,10 +40,6 @@ function applyTheme() {
   for (const [key, value] of Object.entries(vars)) root.setProperty(key, value);
   document.body.className = `theme-${s.theme}`;
 }
-
-/* ------------------------------------------------------------------ */
-/* Tabs                                                               */
-/* ------------------------------------------------------------------ */
 
 function renderTabs() {
   const strip = $('#tabstrip');
@@ -102,10 +95,6 @@ function renderTabs() {
     activeEl?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
 }
-
-/* ------------------------------------------------------------------ */
-/* Side panels                                                        */
-/* ------------------------------------------------------------------ */
 
 function setPanel(view, extra) {
   const body = $('#panel-body');
@@ -459,10 +448,6 @@ function renderGhostState() {
   shield.title = on ? 'Ghost Guard: защита включена' : 'Ghost Guard выключен';
 }
 
-/* ------------------------------------------------------------------ */
-/* Plugin panels in sidebar                                            */
-/* ------------------------------------------------------------------ */
-
 function renderPluginPanels() {
   const wrap = $('#plugin-panels');
   const panels = state.plugins.flatMap((p) => (p.panels || []).map((panel) => ({ ...panel, pluginId: p.id, pluginName: p.name, disabled: p.status !== 'active' })));
@@ -535,10 +520,6 @@ window.addEventListener('message', (e) => {
   if (!msg || !msg.__nb) return;
   nb.plugins.panelMessage(msg.pluginId, { panelId: msg.panelId, data: msg.data });
 });
-
-/* ------------------------------------------------------------------ */
-/* Command palette                                                     */
-/* ------------------------------------------------------------------ */
 
 const BUILTIN_COMMANDS = [
   { icon: '➕', title: 'Новая вкладка', kind: 'tab', run: () => nb.tabs.create() },
@@ -613,10 +594,6 @@ function runPaletteItem(index) {
   if (item) item.run();
 }
 
-/* ------------------------------------------------------------------ */
-/* Helpers                                                             */
-/* ------------------------------------------------------------------ */
-
 function toast(kind, text) {
   const wrap = $('#toasts');
   const el = document.createElement('div');
@@ -679,12 +656,7 @@ function updateFocus() {
   $('#focus-timer').textContent = `${m}:${String(s).padStart(2, '0')}`;
 }
 
-/* ------------------------------------------------------------------ */
-/* Events                                                              */
-/* ------------------------------------------------------------------ */
-
 function wire() {
-  // Window controls
   $('#win-min').onclick = () => nb.window.minimize();
   $('#win-max').onclick = () => nb.window.toggleMaximize();
   $('#win-close').onclick = () => nb.window.close();
@@ -694,7 +666,6 @@ function wire() {
   $('#focus-btn').onclick = () => setPanel('focus');
   $('#palette-btn').onclick = () => openPalette();
 
-  // Navigation
   $('#back').onclick = () => nb.tabs.back(state.activeId);
   $('#forward').onclick = () => nb.tabs.forward(state.activeId);
   $('#reload').onclick = () => {
@@ -716,7 +687,6 @@ function wire() {
   $('#omnibox').addEventListener('focus', () => $('#omnibox').select());
   $('#omni-shield').onclick = () => setPanel('ghost');
 
-  // Side nav
   $('#side-nav').onclick = (e) => {
     const btn = e.target.closest('.side-item');
     if (!btn) return;
@@ -726,12 +696,10 @@ function wire() {
   };
   $('#panel-close').onclick = () => setPanel(null);
 
-  // Quick panel buttons
   $$('#quick-tools [data-panel]').forEach((b) => {
     b.onclick = () => setPanel(b.dataset.panel);
   });
 
-  // Palette keyboard
   window.addEventListener('keydown', (e) => {
     const paletteOpen = !$('#palette').classList.contains('hidden');
     const mod = e.ctrlKey || e.metaKey;
@@ -771,7 +739,6 @@ function wire() {
     }
   });
 
-  // IPC subscriptions
   nb.on('tabs:changed', ({ tabs, activeId, split }) => {
     state.tabs = tabs;
     state.activeId = activeId;
@@ -828,10 +795,6 @@ function toggleSidebar() {
   if (sidebarCollapsed) setPanel(null);
 }
 
-/* ------------------------------------------------------------------ */
-/* Boot                                                               */
-/* ------------------------------------------------------------------ */
-
 async function boot() {
   state.settings = await nb.settings.get();
   state.plugins = await nb.plugins.list();
@@ -851,7 +814,6 @@ async function boot() {
   wire();
   nb.layout({ chromeHeight: 100, sidebarWidth: sidebarCollapsed ? 0 : 264 });
 
-  // Welcome line from the mascot.
   setTimeout(() => setMascot('Привет! Я BoyKisser. Слежу за вкладками, капсулами и капчей.', 'happy'), 600);
 }
 

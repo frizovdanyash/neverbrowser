@@ -1,7 +1,4 @@
-/**
- * Reading Mode — injects a clean reader stylesheet into the active tab.
- * Demonstrates: tabs.script, executeJavaScript return values, commands.
- */
+// Reading Mode — clean reader view.
 const READER = String.raw`
 (() => {
   const ID = 'nb-reader-style';

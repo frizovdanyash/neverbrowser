@@ -25,6 +25,7 @@
 | Сайты отвлекают | сила воли | **Focus Room** с таймером и блокировкой |
 | Браузер = чёрный прямоугольник | | **5 тем + Custom**, маскот **BoyKisser** и живой сайдбар |
 | Плагины = WebExtensions | стандартно и скучно | **NeverBrowser Plugin API**: панели, команды, content-scripts, фильтры навигации, темы |
+| Только десктоп | | **APK на GeckoView** — мобильная версия с капсулами и темами |
 
 ---
 
@@ -52,6 +53,20 @@ npm run dev      # с DevTools
 ```
 
 Требования: Node.js 18+, Linux/macOS/Windows с графической сессией.
+
+### Android APK (GeckoView)
+
+Мобильная версия — отдельный проект в [`android/`](android/README.md) на движке **GeckoView** (как Firefox для Android, не WebView).
+
+```bash
+cd android
+V=$(bash scripts/geckoview-version.sh)
+gradle assembleDebug -PgeckoviewVersion="$V"
+```
+
+Или без локального Android SDK: **Actions → Android APK → Run workflow** — готовый `app-debug.apk` появится в артефактах сборки ([.github/workflows/android.yml](.github/workflows/android.yml)).
+
+Что внутри APK: вкладки на `GeckoSession`, омнибокс, Time Capsule (снимки страниц), Ghost Guard (UA, трекеры, приватные сессии), 5 тем, выбор поисковика. Ограничения честно описаны в [android/README.md](android/README.md): плагины десктопной версии на Android не работают, капсулы там — скриншоты, а не DOM.
 
 ### Посмотреть интерфейс без Electron
 
@@ -169,9 +184,11 @@ src/
     ├── app.js        вкладки, палитра, панели, мост плагинов
     └── newtab.html   страница старта never://start
 plugins/              встроенные плагины
+android/              Android-приложение на GeckoView (APK)
 docs/PLUGIN-API.md    большой гайд по плагинам
 assets/               маскот и иконка
 scripts/              подготовка маскота, preview-сервер
+.github/workflows/    сборка APK
 ```
 
 ### Архитектура в двух словах

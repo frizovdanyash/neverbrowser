@@ -1,0 +1,92 @@
+name: Android APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "android/**"
+      - ".github/workflows/android.yml"
+  pull_request:
+    paths:
+      - "android/**"
+      - ".github/workflows/android.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    name: Build debug APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Resolve GeckoView version
+        id: gecko
+        run: |
+          set -euo pipefail
+          VERSION=""
+          for REPO in \
+            https://maven.mozilla.org/maven2 \
+            https://repo1.maven.org/maven2; do
+            if META="$(curl -fsSL --max-time 20 "$REPO/org/mozilla/geckoview/geckoview/maven-metadata.xml" 2>/dev/null)"; then
+              for MAJOR in 131 132 133 134; do
+                VERSION="$(printf '%s' "$META" | grep -o '<version>[^<]*</version>' | sed 's/<[^>]*>//g' | grep -E "^${MAJOR}\\." | tail -n 1)"
+                if [ -n "$VERSION" ]; then break 2; fi
+              done
+              VERSION="$(printf '%s' "$META" | grep -o '<version>[^<]*</version>' | tail -n 1 | sed 's/<[^>]*>//g')"
+              break
+            fi
+          done
+          if [ -z "$VERSION" ]; then VERSION="131.0.20240913135429"; fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "::notice title=GeckoView::Resolved $VERSION"
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.7"
+
+      - name: Assemble
+        id: assemble
+        continue-on-error: true
+        working-directory: android
+        run: |
+          set -o pipefail
+          gradle assembleDebug -PgeckoviewVersion=${{ steps.gecko.outputs.version }} --no-daemon --stacktrace --console=plain 2>&1 | tee build.log
+
+      - name: Report build errors
+        if: steps.assemble.outcome != 'success'
+        run: |
+          if [ -f android/build.log ]; then
+            grep -E "^e: |^error:|What went wrong|FAILURE:|Caused by:" android/build.log | head -n 12 | while IFS= read -r line; do
+              echo "::error title=Gradle::${line//$'\n'/ }"
+            done
+          fi
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: android/build.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Fail when assemble failed
+        if: steps.assemble.outcome != 'success'
+        run: exit 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: neverbrowser-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 30
