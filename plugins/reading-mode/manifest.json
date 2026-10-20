@@ -1,0 +1,11 @@
+{
+  "id": "reading-mode",
+  "name": "Reading Mode",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "frizovdanya",
+  "description": "Убирает всё лишнее со страницы и оставляет чистый текст в стиле NeverBrowser.",
+  "main": "index.js",
+  "permissions": ["tabs.script", "commands", "ui", "notifications", "mascot"],
+  "contributes": { "commands": ["toggle"] }
+}

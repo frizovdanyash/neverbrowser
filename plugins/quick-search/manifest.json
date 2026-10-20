@@ -1,0 +1,11 @@
+{
+  "id": "quick-search",
+  "name": "Quick Search",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "frizovdanya",
+  "description": "Поиск сразу по нескольким источникам и быстрый переход к капсулам и вкладкам.",
+  "main": "index.js",
+  "permissions": ["tabs", "ui", "commands", "capsules", "storage"],
+  "contributes": { "commands": ["search"], "panels": ["quick"] }
+}

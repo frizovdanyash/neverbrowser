@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>NeverBrowser — новая вкладка</title>
+<style>
+  :root{
+    --bg:#101018; --panel:#17171f; --panel2:#1d1d28; --text:#f5f2ff; --muted:#9a94b3;
+    --accent:#ff7ab8; --accent2:#9d7bff;
+  }
+  * { box-sizing: border-box; }
+  html,body{height:100%;margin:0}
+  body{
+    background:
+      radial-gradient(900px 600px at 20% 0%, rgba(255,122,184,.16), transparent 60%),
+      radial-gradient(800px 600px at 85% 20%, rgba(157,123,255,.14), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    font:14px/1.5 Inter,"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    overflow:auto;
+  }
+  .start{ width:min(860px, 92vw); padding:44px 0 60px; text-align:center; }
+  .mascot{ width:132px; height:auto; filter:drop-shadow(0 18px 34px rgba(0,0,0,.45)); animation: float 5s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-7px); } }
+  h1 { font-size: 30px; margin: 12px 0 4px; letter-spacing:-.02em; }
+  h1 span { color: var(--accent); }
+  .tagline { color: var(--muted); margin: 0 0 26px; font-size: 13.5px; }
+  .tagline b { color: var(--text); font-weight: 500; }
+
+  form.search{ display:flex; gap:8px; align-items:center; margin:0 auto 10px; max-width:620px;
+    background:var(--panel2); border:1px solid rgba(255,255,255,.09); border-radius:16px; padding:8px 8px 8px 16px;
+    transition:border-color .2s, box-shadow .2s; }
+  form.search:focus-within{ border-color:var(--accent); box-shadow:0 0 0 4px rgba(255,122,184,.14); }
+  form.search input{ flex:1; background:transparent; border:0; outline:none; color:var(--text); font-size:15px; }
+  form.search button{ border:0; border-radius:11px; padding:10px 16px; background:var(--accent); color:#1a1020; font-weight:600; cursor:pointer; }
+  .engines{ display:flex; gap:6px; justify-content:center; color:var(--muted); font-size:11.5px; margin-bottom:34px; }
+  .engines label{ cursor:pointer; padding:4px 9px; border-radius:999px; border:1px solid rgba(255,255,255,.08); }
+  .engines input{ display:none; }
+  .engines input:checked + span{ color:var(--accent); }
+  .engines label:has(input:checked){ border-color:var(--accent); background:rgba(255,122,184,.1); }
+
+  .tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-bottom:28px; }
+  .tile{ display:block; text-decoration:none; color:var(--text); background:var(--panel);
+    border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:14px 10px; transition:transform .15s, border-color .15s; }
+  .tile:hover{ transform:translateY(-2px); border-color:rgba(255,122,184,.5); }
+  .tile .ico{ font-size:20px; display:block; margin-bottom:6px; }
+  .tile .name{ font-size:12.5px; }
+  .tile .host{ font-size:10px; color:var(--muted); }
+
+  .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; text-align:left; }
+  .card{ background:var(--panel); border:1px solid rgba(255,255,255,.07); border-radius:16px; padding:15px 16px; }
+  .card h3{ margin:0 0 6px; font-size:13px; color:var(--accent); }
+  .card p{ margin:0; color:var(--muted); font-size:12px; }
+  .card .k{ display:inline-block; margin-top:9px; font-family:ui-monospace,monospace; font-size:10.5px;
+    background:var(--panel2); border:1px solid rgba(255,255,255,.08); border-radius:6px; padding:2px 6px; color:var(--text); }
+
+  footer{ margin-top:34px; color:var(--muted); font-size:11px; }
+  footer b{ color:var(--text); font-weight:500; }
+  .ghost{ display:inline-flex; gap:6px; align-items:center; margin-top:8px; padding:5px 10px; border-radius:999px;
+    border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.03); font-size:11px; }
+  .dot{ width:6px; height:6px; border-radius:50%; background:#5fd68a; box-shadow:0 0 8px #5fd68a; }
+</style>
+</head>
+<body>
+<main class="start">
+  <img class="mascot" src="../../assets/mascot.png" alt="BoyKisser — маскот NeverBrowser">
+  <h1>Never<span>Browser</span></h1>
+  <p class="tagline">Браузер, который <b>никогда не забывает</b> страницы, <b>никогда не выглядит ботом</b> и <b>никогда не скучает</b>.</p>
+
+  <form class="search" id="search">
+    <input id="q" autofocus autocomplete="off" placeholder="Введите запрос или адрес…">
+    <button type="submit">Искать</button>
+  </form>
+  <div class="engines">
+    <label><input type="radio" name="engine" value="duckduckgo" checked><span>DuckDuckGo</span></label>
+    <label><input type="radio" name="engine" value="google"><span>Google</span></label>
+    <label><input type="radio" name="engine" value="startpage"><span>Startpage</span></label>
+    <label><input type="radio" name="engine" value="bing"><span>Bing</span></label>
+  </div>
+
+  <div class="tiles">
+    <a class="tile" href="https://github.com/frizovdanya"><span class="ico">🐾</span><span class="name">GitHub</span><span class="host">frizovdanya</span></a>
+    <a class="tile" href="https://duckduckgo.com"><span class="ico">🦆</span><span class="name">DuckDuckGo</span><span class="host">duckduckgo.com</span></a>
+    <a class="tile" href="https://developer.mozilla.org"><span class="ico">📚</span><span class="name">MDN</span><span class="host">developer.mozilla.org</span></a>
+    <a class="tile" href="https://www.electronjs.org/docs/latest"><span class="ico">⚡</span><span class="name">Electron</span><span class="host">electronjs.org</span></a>
+    <a class="tile" href="https://news.ycombinator.com"><span class="ico">🧠</span><span class="name">Hacker News</span><span class="host">news.ycombinator.com</span></a>
+    <a class="tile" href="https://www.youtube.com"><span class="ico">🎧</span><span class="name">YouTube</span><span class="host">youtube.com</span></a>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>◷ Time Capsule</h3>
+      <p>Каждая страница, которую ты открыл, может быть заморожена навсегда. Сайт удалил статью? У тебя остался снимок.</p>
+      <span class="k">Ctrl+Shift+C</span>
+    </div>
+    <div class="card">
+      <h3>◉ Ghost Guard</h3>
+      <p>Убирает следы Electron из отпечатка: User-Agent, webdriver, плагины, языки. Google перестаёт проверять каждый запрос.</p>
+      <div class="ghost"><span class="dot"></span> защита включена</div>
+    </div>
+    <div class="card">
+      <h3>⌘ Command Palette</h3>
+      <p>Одна строка, чтобы открыть капсулу, запустить команду плагина, включить split view или Focus Room.</p>
+      <span class="k">Ctrl+K</span>
+    </div>
+    <div class="card">
+      <h3>🧩 Plugin API</h3>
+      <p>Панели, команды, content-scripts, фильтры навигации, темы и тосты. Полный гайд — docs/PLUGIN-API.md.</p>
+      <span class="k">api.ui.registerPanel()</span>
+    </div>
+  </div>
+
+  <footer>
+    NeverBrowser v1.0 · автор <b>@frizovdanya</b> · маскот <b>BoyKisser</b><br>
+    <span style="opacity:.7">никогда не забывает · никогда не капча · никогда как все</span>
+  </footer>
+</main>
+
+<script>
+  const ENGINES = {
+    duckduckgo: 'https://duckduckgo.com/?q=',
+    google: 'https://www.google.com/search?q=',
+    startpage: 'https://www.startpage.com/sp/search?query=',
+    bing: 'https://www.bing.com/search?q='
+  };
+  const form = document.getElementById('search');
+  const q = document.getElementById('q');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const value = q.value.trim();
+    if (!value) return;
+    const engine = document.querySelector('input[name="engine"]:checked').value;
+    const looksLikeUrl = /^[\w-]+(\.[\w-]+)+(\/.*)?$/.test(value) && !/\s/.test(value);
+    location.href = looksLikeUrl ? `https://${value}` : ENGINES[engine] + encodeURIComponent(value);
+  });
+</script>
+</body>
+</html>
