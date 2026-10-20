@@ -62,6 +62,15 @@ jobs:
           set -o pipefail
           gradle assembleDebug -PgeckoviewVersion=${{ steps.gecko.outputs.version }} --no-daemon --stacktrace --console=plain 2>&1 | tee build.log
 
+      - name: Report build errors
+        if: steps.assemble.outcome != 'success'
+        run: |
+          if [ -f android/build.log ]; then
+            grep -E "^e: |^error:|What went wrong|FAILURE:|Caused by:" android/build.log | head -n 12 | while IFS= read -r line; do
+              echo "::error title=Gradle::${line//$'\n'/ }"
+            done
+          fi
+
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
