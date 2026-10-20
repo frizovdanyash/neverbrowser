@@ -42,6 +42,17 @@ function renderChrome() {
   let html = fs.readFileSync(file, 'utf8');
   html = html.replace(/(src|href)="\.\.\/\.\.\/([^"]+)"/g, (_m, attr, file) => `${attr}="/${file}"`);
   html = html.replace('href="styles.css"', 'href="/src/renderer/styles.css"');
+  const previewStyle = `<style>
+    /* preview-only: there is no native WebContentsView in a browser tab */
+    #stage { display:flex; align-items:center; justify-content:center;
+      background:
+        radial-gradient(700px 520px at 24% 6%, rgba(255,122,184,.16), transparent 62%),
+        radial-gradient(760px 560px at 84% 30%, rgba(157,123,255,.13), transparent 62%),
+        var(--bg); }
+    #stage::after { content:""; width:min(58%, 420px); height:74%;
+      background:url("/assets/mascot.png") center / contain no-repeat; opacity:.18; }
+  </style>`;
+  html = html.replace('</head>', () => `${previewStyle}\n</head>`);
   html = html.replace('<script src="app.js"></script>', () => '<script src="/scripts/preview/mock-nb.js"></script>\n  <script src="/src/renderer/app.js"></script>');
   return html;
 }
