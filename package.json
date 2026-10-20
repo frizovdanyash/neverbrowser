@@ -1,0 +1,22 @@
+{
+  "name": "neverbrowser",
+  "productName": "NeverBrowser",
+  "version": "1.0.0",
+  "description": "NeverBrowser — a browser that never forgets, never gets caught being a bot, and never looks like the others.",
+  "author": {
+    "name": "frizovdanya",
+    "url": "https://github.com/frizovdanya"
+  },
+  "license": "MIT",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "web": "node scripts/preview-server.js",
+    "icons": "python3 scripts/mascot.py"
+  },
+  "keywords": ["browser", "electron", "plugins", "privacy", "mascot"],
+  "devDependencies": {
+    "electron": "^32.2.6"
+  }
+}

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' data:">
+  <title>NeverBrowser</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="frame">
+    <!-- title bar -->
+    <header id="titlebar">
+      <div id="brand" title="NeverBrowser">
+        <img src="../../assets/mascot.png" alt="BoyKisser" id="brand-mascot">
+        <span class="brand-name">Never<span>Browser</span></span>
+      </div>
+
+      <div id="tabstrip" role="tablist"></div>
+
+      <button id="new-tab" class="icon-btn" title="Новая вкладка (Ctrl+T)">+</button>
+
+      <div id="quick-tools">
+        <button class="icon-btn" data-panel="capsules" title="Time Capsule (Ctrl+Shift+C)">◷</button>
+        <button class="icon-btn" data-panel="plugins" title="Плагины (Ctrl+Shift+P)">⚙</button>
+        <button class="icon-btn" data-panel="ghost" title="Ghost Guard">◉</button>
+        <button class="icon-btn" data-panel="settings" title="Настройки (Ctrl+,)">☰</button>
+      </div>
+
+      <div id="win-controls">
+        <button id="win-min" title="Свернуть">–</button>
+        <button id="win-max" title="Развернуть">▢</button>
+        <button id="win-close" title="Закрыть">×</button>
+      </div>
+    </header>
+
+    <!-- toolbar -->
+    <div id="toolbar">
+      <div class="nav-buttons">
+        <button id="back" class="icon-btn" title="Назад">‹</button>
+        <button id="forward" class="icon-btn" title="Вперёд">›</button>
+        <button id="reload" class="icon-btn" title="Обновить (Ctrl+R)">⟳</button>
+      </div>
+
+      <div id="omnibox-wrap">
+        <span id="omni-shield" class="mini-badge" title="Ghost Guard: защита включена">▲</span>
+        <input id="omnibox" type="text" spellcheck="false" autocomplete="off"
+               placeholder="Поиск или адрес — спроси NeverBrowser" />
+        <span id="omni-hint" class="hint"></span>
+        <button id="omni-go" class="icon-btn" title="Перейти">↵</button>
+      </div>
+
+      <div id="focus-pill" class="hidden">
+        <span>⌛</span><b id="focus-timer">25:00</b>
+        <button id="focus-stop" title="Завершить">×</button>
+      </div>
+
+      <div class="tool-actions">
+        <button id="split-btn" class="icon-btn" title="Split view (Ctrl+Shift+S)">▥</button>
+        <button id="focus-btn" class="icon-btn" title="Focus Room (Ctrl+Shift+F)">⌛</button>
+        <button id="palette-btn" class="icon-btn" title="Командная палитра (Ctrl+K)">⌘</button>
+        <button id="sidebar-toggle" class="icon-btn" title="Свернуть боковую панель">▤</button>
+      </div>
+    </div>
+
+    <!-- sidebar -->
+    <aside id="sidebar">
+      <nav class="side-nav" id="side-nav">
+        <button class="side-item active" data-view="home">🏠 <b>Старт</b> <kbd>Ctrl+1</kbd></button>
+        <button class="side-item" data-view="capsules">◷ <b>Time Capsule</b> <kbd>Ctrl+2</kbd></button>
+        <button class="side-item" data-view="ghost">◉ <b>Ghost Guard</b> <kbd>Ctrl+3</kbd></button>
+        <button class="side-item" data-view="plugins">⚙ <b>Плагины</b> <kbd>Ctrl+4</kbd></button>
+        <button class="side-item" data-view="focus">⌛ <b>Focus Room</b> <kbd>Ctrl+5</kbd></button>
+        <button class="side-item" data-view="settings">🎨 <b>Настройки</b> <kbd>Ctrl+,</kbd></button>
+      </nav>
+      <div class="side-divider"></div>
+      <div class="side-label">Панели плагинов</div>
+      <div id="plugin-panels" class="plugin-panels"></div>
+
+      <div class="mascot-dock">
+        <img src="../../assets/mascot.png" alt="BoyKisser" id="dock-mascot">
+        <div class="bubble">
+          <b data-mascot-name>BoyKisser</b>
+          <p id="mascot-text">Привет! Я слежу за твоими вкладками.</p>
+        </div>
+      </div>
+
+      <div id="toasts"></div>
+
+      <div class="side-footer">
+        <div>
+          <div class="small"><b>NeverBrowser</b> v1.0</div>
+          <div class="small muted">by @frizovdanya · Never forget</div>
+        </div>
+      </div>
+    </aside>
+
+    <main id="stage" aria-hidden="true"></main>
+  </div>
+
+  <!-- side panel -->
+  <div id="panel" class="panel hidden" role="dialog">
+    <div class="panel-head">
+      <span id="panel-title">Панель</span>
+      <button id="panel-close" class="icon-btn">×</button>
+    </div>
+    <div id="panel-body" class="panel-body"></div>
+  </div>
+
+  <!-- command palette -->
+  <div id="palette" class="palette hidden">
+    <div class="palette-box">
+      <input id="palette-input" placeholder="Команда, плагин или название капсулы…" />
+      <div id="palette-results"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

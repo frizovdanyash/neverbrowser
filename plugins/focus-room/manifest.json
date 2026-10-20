@@ -1,0 +1,15 @@
+{
+  "id": "focus-room",
+  "name": "Focus Room",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "frizovdanya",
+  "description": "Режим глубокой работы: блокирует отвлекающие сайты и показывает таймер в тулбаре.",
+  "main": "index.js",
+  "permissions": ["navigation", "commands", "ui", "storage", "notifications", "mascot", "tabs"],
+  "contributes": {
+    "commands": ["start-15", "start-25", "start-45", "stop"],
+    "panels": ["focus-panel"]
+  },
+  "homepage": "https://github.com/frizovdanya"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "hello-plugin",
+  "name": "Hello Plugin",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "frizovdanya",
+  "description": "Минимальный рабочий плагин NeverBrowser: панель, команда и тост.",
+  "main": "index.js",
+  "permissions": ["ui", "notifications", "commands", "mascot", "storage", "theme"],
+  "contributes": {
+    "panels": ["hello"],
+    "commands": ["greet"]
+  }
+}

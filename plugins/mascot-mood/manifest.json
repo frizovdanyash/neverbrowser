@@ -1,0 +1,11 @@
+{
+  "id": "mascot-mood",
+  "name": "BoyKisser Moods",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "frizovdanya",
+  "description": "Маскот комментирует вкладки: поздравляет с капсулой, ворчит на соцсети и радуется новым находкам.",
+  "main": "index.js",
+  "permissions": ["mascot", "ui", "storage", "commands"],
+  "contributes": { "commands": ["say"] }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "cookie-cleaner",
+  "name": "Cookie Cleaner",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "frizovdanya",
+  "description": "Прячет cookie-баннеры и подписки на всех сайтах. Никаких «Принять всё» на пол-экрана.",
+  "main": "index.js",
+  "permissions": ["content-scripts", "commands", "ui", "notifications"],
+  "contributes": {}
+}

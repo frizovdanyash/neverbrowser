@@ -1,0 +1,11 @@
+{
+  "id": "theme-studio",
+  "name": "Theme Studio",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "author": "frizovdanya",
+  "description": "Живые пресеты оформления: применяются мгновенно, поверх любой темы NeverBrowser.",
+  "main": "index.js",
+  "permissions": ["theme", "ui", "commands", "storage", "notifications"],
+  "contributes": { "panels": ["studio"], "commands": ["reset"] }
+}
